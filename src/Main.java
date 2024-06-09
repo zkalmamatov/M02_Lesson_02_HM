@@ -19,8 +19,10 @@ public class Main {
         BankAccount bank_account = new BankAccount(15000.00);
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println();
+        System.out.println("Ваш текущий баланс: " + bank_account.getAmount());
+        System.out.println();
 
-        System.out.println("\nВаш текущий баланс: " + bank_account.getAmount());
         while (true) {
             System.out.println("Укажите сумму для снятия: ");
             int inSum = scanner.nextInt();
@@ -29,9 +31,13 @@ public class Main {
                 System.out.println("Ваш текущий остаток на счете: " + bank_account.getAmount() + "\n");
             } catch (LimitException e) {
                 System.out.println(e.getMessage());
-            }
-            if (bank_account.getAmount() <= 0) {
-                System.out.println("На вашем балансе нет средств для снятия наличных!");
+                System.out.println("Доступная сумма для снятия:" + e.getRemainingAmount());
+                try {
+                    bank_account.withDraw((int) bank_account.getAmount());
+                } catch (LimitException ex) {
+                    throw new RuntimeException(ex);
+                }
+                System.out.println("\nВаш текущий остаток на счете: " + bank_account.getAmount());
                 break;
             }
         }

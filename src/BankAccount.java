@@ -20,11 +20,10 @@ public class BankAccount {
 
     public void withDraw(int sum) throws LimitException {
         if (sum > amount) {
-            throw new LimitException("\nНедостаточно средств для снятия наличных, " +
-                    " Ваш баланс: " + amount);
+            throw new LimitException("\nЗапрашиваемая сумма больше, чем остаток на счете", amount );
         }
         amount -= sum;
-        System.out.println("Со счета успешно сняли: " + sum + " сом");;
+        System.out.println("\nСо счета успешно сняли: " + sum + " сом");;
     }
 
 
